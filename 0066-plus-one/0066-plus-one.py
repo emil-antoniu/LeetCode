@@ -1,28 +1,36 @@
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
         
-        index = -2
         carry = 0
-        
-        digits[-1] = (digits[-1] + 1) % 10
-        
-        if digits[-1] == 0:
+
+        if digits == [9]: return [1, 0]
+
+        if digits[-1] + 1 <= 9: 
+            digits[-1] += 1
+            # print("One")
+            return digits
+        else: 
             carry = 1
-        # print(carry)
-        while index >= -len(digits):
-            # print(digits[index])
-            if carry == 1:
-                digits[index] = (digits[index] + 1) % 10
-                if digits[index] == 0:
+            digits[-1] = 0
+            for i in range(len(digits) - 2, 0, -1):
+                if digits[i] + 1 > 9:
+                    digits[i] = 0
                     carry = 1
                 else:
+                    digits[i] += carry
                     carry = 0
-            else:
-                break
-            
-            index -= 1
-            
-        if carry == 1:
-            digits.insert(0, 1)
-            
-        return digits
+                if carry == 0: 
+                    # print("Two")
+                    return digits
+
+            if carry == 1:
+                if digits[0] + 1 > 9:
+                    digits[0] = 0
+                    # print("Three")
+                    return [1] + digits
+                else:
+                    digits[0] += 1
+                    # print("Four")
+                    return digits
+            # print("Five")
+            return digits
